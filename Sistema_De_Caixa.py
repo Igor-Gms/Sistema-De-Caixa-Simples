@@ -1,7 +1,6 @@
 import datetime
 
 agora = datetime.datetime.now()
-
 hora = agora.strftime('%H:%M:%S')
 
 carrinho = []
@@ -15,50 +14,72 @@ catalogo = {
     105: ["Açucar 5kg", 16.90],
     106: ["Óleo de Soja 900ml", 6.79],
     107: ["Pão De Forma 400g", 5.69],
-    108: ["Manteiga 200g",10.20],
+    108: ["Manteiga 200g", 10.20],
     109: ["Cartela De Ovos 20un", 17.90],
     110: ["Sal Refinado 1kg", 3.79],
     111: ["Refrigerante Guaraná 2L", 8.79]
-
 }
+
+#Mostrar Lista De Produtos
 def mostrar_catalogo():
     print("===== Catálogo De Produtos =====")
+    for codigo, (nome, preco) in catalogo.items():
+        print(f"Codigo: {codigo} | Produto: {nome} | Preço: R$ {preco:.2f}")
+    print()
 
-    for codigo,(nome, preco) in catalogo.items(): # mostras os produtos de forma mais facil de entender
-
-        print(f"Codigo: {codigo} | Produto: {nome} | Preço:R$ {preco:.2f}")
-print()
 
 mostrar_catalogo()
 
+pagamento = "N/A"
+escolha_compra = None
+
 while True:
- carrinho1 = int(input("\nEscolha Os Produtos De Acordo Com Os Códigos(Digite 0 Para Finalizar a Compra):"))
- if carrinho1 == 0:
-  print("Compra Finalizada.")
-  break
- 
- #Remover 1 Unidade Do Item Correspondente Do Carrinho
- elif carrinho1 < 0:
-   codigo_para_remover = abs(carrinho1) #abs transforma o codigo em negativo(101 para -101)
-   
-   if codigo_para_remover in carrinho:
-     carrinho.remove(codigo_para_remover)
-     print(f"REMOVIDO: {catalogo[codigo_para_remover][0]} Saiu Do Carrinho.")
-
-   else:
-     print("Este Produto Não Está No Seu Carrinho")
-
- elif 101 <= carrinho1 <= 111 :
-  carrinho.append(carrinho1) #colocar no carrinho os codigo que a pessoa 
-  print(f"Você Adicionou -- {catalogo[carrinho1][0]} no carrinho")
- else:
-   print("Código Inválido")
-
-for codigo in carrinho: # fazer a soma dos prodotos
- total_venda += catalogo [codigo][1]
-
-if total_venda == 0:# saber se a pessoa escolheu algum produto
- print("você não escolheu nenhum produto.")
-else:
- print(f"Total da compra:{total_venda}")
+    carrinho1 = int(input("\nEscolha Os Produtos De Acordo Com Os Códigos (Digite 0 Para Selecionar a Forma De Pagamento): "))
+       #Definir Forma de Pagamento No Final Da Compra 
+    if carrinho1 == 0:
+        if len(carrinho) > 0:
+            print("\nFORMAS DE PAGAMENTO:")
+            print("1 - Dinheiro - (10% De Desconto No Valor Da Compra)")
+            print("2 - Cartão de Crédito/Débito")
+            print("3 - PIX - (10% De Desconto No Valor Da Compra)")
+            escolha_compra = int(input("Escolha a forma de pagamento: "))
+            opcoes_pagamento = {1: "Dinheiro", 2: "Cartão", 3: "PIX"}
+            pagamento = opcoes_pagamento.get(escolha_compra, "Não Informado")
         
+            print("Compra Finalizada.")
+        break
+      #Remover Uma Unidade Do Produto Do Carrinho
+    if carrinho1 < 0:
+        codigo_para_remover = abs(carrinho1)
+        if codigo_para_remover in carrinho:
+            carrinho.remove(codigo_para_remover)
+            print(f"REMOVIDO: {catalogo[codigo_para_remover][0]} Saiu Do Carrinho.")
+        else:
+            print("Este Produto Não Está No Seu Carrinho")
+
+    elif 101 <= carrinho1 <= 111:
+        carrinho.append(carrinho1)
+        print(f"\nVocê Adicionou -- {catalogo[carrinho1][0]} No Carrinho")
+
+    else:
+        print("Código Inválido")
+
+for codigo in carrinho:
+    total_venda += catalogo[codigo][1]
+
+# Aplicar 10% de desconto para Dinheiro ou PIX 
+desconto = 0.0
+if escolha_compra == 1 or escolha_compra == 3:
+    desconto = total_venda * 0.10
+
+total_final = total_venda - desconto
+
+if total_venda == 0:
+    print("Você Não Escolheu Nenhum Produto.")
+else:
+    print(f"Subtotal: R$ {total_venda:.2f}")
+    if desconto > 0:
+        print(f"Desconto (10%): - R$ {desconto:.2f}")
+    print(f"Total da compra: R$ {total_final:.2f}")
+    if pagamento != "N/A":
+        print(f"Forma de pagamento: {pagamento}")
