@@ -2,7 +2,7 @@ import statistics
 import os
 import datetime
 agora = datetime.datetime.now() 
-hora1 = agora.strftime('%Y-%m-%d %H:%M:%S')
+hora1 = agora.strftime(' %d/%m/%Y %H:%M:%S')
 carrinho = []
 total_venda = 0
 
@@ -55,10 +55,15 @@ while True:
         except :
             print("Digite um número das opções: Escolha a forma de pagamento") #impede a pessoa de colocar letra e da erro
             continue
+         
         opcoes_pagamento = {1: "Dinheiro", 2: "Cartão", 3: "PIX"}
-        pagamento = opcoes_pagamento.get(escolha_compra, "Não Informado")
-        print("Compra Finalizada.")
-        break
+        pagamento = opcoes_pagamento.get(escolha_compra, "Não Informado") 
+        if pagamento == "Não Informado":
+           print("Digite um número das opções: Escolha a forma de pagamento") # se não for  opcão de pagamento ele volta
+           continue
+        else: 
+         print("Compra Finalizada.")
+         break
       break
     #Remover Uma Unidade Do Produto Do Carrinho
    if carrinho1 < 0:
@@ -94,7 +99,7 @@ if escolha_compra == 1 or escolha_compra == 3:
 total_final = total_venda - desconto
 
 fim = datetime.datetime.now()
-hora2 = fim.strftime('%Y-%m-%d %H:%M:%S')
+hora2 = fim.strftime('%d/%m/%Y %H:%M:%S')
 
 os.system('cls' if os.name == 'nt' else 'clear') #Limpa Tela Antes De Mostrar Resumo Da Compra
 
