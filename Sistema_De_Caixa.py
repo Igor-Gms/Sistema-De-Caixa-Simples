@@ -81,9 +81,6 @@ while True:
    else:
         print("Código Inválido")
 
-for codigo in carrinho:
-    total_venda += catalogo[codigo][1]
-
 lista_precos = [] #Lista Preços dos Itens Para Cálculo da Média
 
 for codigo in carrinho:
