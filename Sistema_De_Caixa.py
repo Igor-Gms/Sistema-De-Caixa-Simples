@@ -147,3 +147,4 @@ else:
         print("-"*40)
     if pagamento != "N/A":
         print(f"Forma de pagamento: {pagamento}")
+        print("-"*40)
