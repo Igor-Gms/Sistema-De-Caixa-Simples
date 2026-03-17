@@ -96,7 +96,7 @@ for codigo in carrinho:
     total_venda += preco_item
     lista_precos.append(preco_item)
 
-# Aplicar 10% de desconto para ou PIX 
+# Aplicar 10% de desconto para Dinheiro ou PIX 
 desconto = 0.0
 if escolha_compra == 1 or escolha_compra == 3:
     desconto = total_venda * 0.10
