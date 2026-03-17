@@ -21,7 +21,7 @@ catalogo = {
 }
 
 def limpar_tela(): #Comando Para Limpar a Tela
-    os.system(cls if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 #Mostrar Lista De Produtos
 def mostrar_catalogo():
@@ -43,7 +43,13 @@ while True:
      print("\nOperação Inválida!")  #impede a pessoa de colocar letra e da erro
      continue
    if carrinho1 == 0:
-      os.system('cls' if os.name == 'nt' else 'clear') #Limpa Tela Antes De Escolher A Forma De Pagamento
+      if len (carrinho) == 0:
+          print("-"*30)
+          print("Carrinho Vazio! Encerrendo...")
+          input("\nAperte ENTER Para Sair...")
+          break
+      
+      limpar_tela()
       while True:
         if len(carrinho) > 0:
             print("\nFORMAS DE PAGAMENTO:")
@@ -61,7 +67,9 @@ while True:
         if pagamento == "Não Informado":
            print("Digite um número das opções: Escolha a forma de pagamento") # se não for  opcão de pagamento ele volta
            continue
-        else: 
+        if escolha_compra == 1:
+            break
+        elif escolha_compra == 2 or escolha_compra == 3:
          print("Compra Finalizada.")
          break
       break
@@ -88,17 +96,32 @@ for codigo in carrinho:
     total_venda += preco_item
     lista_precos.append(preco_item)
 
-# Aplicar 10% de desconto para Dinheiro ou PIX 
+# Aplicar 10% de desconto para ou PIX 
 desconto = 0.0
 if escolha_compra == 1 or escolha_compra == 3:
     desconto = total_venda * 0.10
 
 total_final = total_venda - desconto
 
+if escolha_compra == 1: #Opção de Valor Para Pagamento Em Dinheiro(Se Necessario, Troco)
+    print(f"\nTotal a Ser Pago (Com Desconto): R$ {total_final:.2f}")
+    while True:
+        try:
+            print("-"*40)
+            valor_pago = float(input("Valor Entregue Pelo Cliente: R$ "))
+            if valor_pago >= total_final:
+                print("-"*40)
+                troco = valor_pago - total_final 
+                break
+            else:
+                print(f"Valor insuficiente! O total é R$ {total_final:.2f}")
+        except:
+            print("Digite um valor numérico válido.")
+
 fim = datetime.datetime.now()
 hora2 = fim.strftime('%d/%m/%Y %H:%M:%S')
 
-os.system('cls' if os.name == 'nt' else 'clear') #Limpa Tela Antes De Mostrar Resumo Da Compra
+limpar_tela() #Limpa Tela Antes De Mostrar Resumo Da Compra
 
 if total_venda == 0:
     print("Você Não Escolheu Nenhum Produto.")
@@ -116,5 +139,11 @@ else:
         print("-"*40)
     print(f"Total da compra: R$ {total_final:.2f}")
     print("-"*40)
+    if escolha_compra == 1:
+        print("-"*40)
+        print(f"Valor Pago: R${valor_pago:.2f}")
+        print("-"*40)
+        print(f"Troco: R${troco:.2f}")
+        print("-"*40)
     if pagamento != "N/A":
         print(f"Forma de pagamento: {pagamento}")
