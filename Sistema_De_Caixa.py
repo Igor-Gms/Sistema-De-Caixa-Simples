@@ -146,5 +146,5 @@ else:
         print(f"Troco: R${troco:.2f}")
         print("-"*40)
     if pagamento != "N/A":
-        print(f"Forma de pagamento: {pagamento}")
+        print(f"Forma de Pagamento: {pagamento}")
         print("-"*40)
