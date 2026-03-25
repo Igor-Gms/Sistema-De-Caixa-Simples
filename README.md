@@ -136,7 +136,7 @@ Este projeto está sob a licença MIT. Sinta-se livre para usar e modificar.
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Seu Nome Aqui**
+Desenvolvido por Igor Gomes
 
 💡 Projeto focado em aprendizado de Python e lógica de programação.
 
